@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   FlatList,
@@ -49,6 +50,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectionState, setSelectionState] = useState("All");
   const data = ["All", "ACM", "IEEE", "EMS", "CyberSec"];
+
   const filteredEvents = events.filter(
     (x) =>
       (selectionState === "All" || x.society === selectionState) &&
@@ -106,7 +108,12 @@ export default function App() {
           </View>
         )}
         renderItem={({ item }) => (
-          <Pressable style={styles.card}>
+          <Pressable
+            style={styles.card}
+            onPress={() =>
+              router.push({ pathname: "/event/[id]", params: item })
+            }
+          >
             <Text style={styles.cardSociety}> {item.society}</Text>
             <Text style={styles.cardTitle}> {item.title}</Text>
             <Text style={styles.cardMeta}>
